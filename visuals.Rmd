@@ -19,71 +19,11 @@ a <- read.csv(file="imputed4 - imputed4.csv")
 sites <- unique(a$S)
 nsites <- length(sites)
 
-v1 <- a[a$S == sites[1],]
-v2 <- a[a$S == sites[2],]
-v3 <- a[a$S == sites[3],]
-v4 <- a[a$S == sites[4],]
-v5 <- a[a$S == sites[5],]
-v6 <- a[a$S == sites[6],]
-v7 <- a[a$S == sites[7],]
-v8 <- a[a$S == sites[8],]
-v9 <- a[a$S == sites[9],]
-v10 <- a[a$S == sites[10],]
-v11 <- a[a$S == sites[11],]
-```
-
-```{r}
-ma.out1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "nearest", distance = "logit", replace = TRUE)
-
-ma.out11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "nearest", distance = "logit", replace = TRUE)
-```
-
 ```{r}
 ps <- c(ma.out1[["distance"]], ma.out2[["distance"]], ma.out3[["distance"]], ma.out4[["distance"]], ma.out5[["distance"]], ma.out6[["distance"]], ma.out7[["distance"]], ma.out8[["distance"]], ma.out9[["distance"]], ma.out10[["distance"]], ma.out11[["distance"]])
 data_1 <- cbind(ps,a)
 data_1
 write.csv(data_1, file = "nearest.csv", row.names = FALSE)
-```
-```{r}
-Ma.out1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "full", distance = "logit")
-
-Ma.out2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "full", distance = "logit")
-
-Ma.out3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "full", distance = "logit")
-
-Ma.out4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "full", distance = "logit")
-
-Ma.out5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "full", distance = "logit")
-
-Ma.out6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "full", distance = "logit")
-
-Ma.out7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "full", distance = "logit")
-
-Ma.out8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "full", distance = "logit")
-
-Ma.out9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "full", distance = "logit")
-
-Ma.out10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "full", distance = "logit")
-
-Ma.out11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "full", distance = "logit")
 ```
 
 ```{r}
@@ -93,29 +33,6 @@ data_2
 ```
 
 
-```{r}
-ma.out_1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "optimal", distance = "logit")
-
-ma.out_2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "optimal", distance = "logit")
-
-ma.out_3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "optimal", distance = "logit")
-
-ma.out_4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "optimal", distance = "logit")
-
-ma.out_5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "optimal", distance = "logit")
-
-ma.out_6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "optimal", distance = "logit")
-
-ma.out_7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "optimal", distance = "logit")
-
-ma.out_8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "optimal", distance = "logit")
-
-ma.out_9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "optimal", distance = "logit")
-
-ma.out_10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "optimal", distance = "logit")
-
-ma.out_11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "optimal", distance = "logit")
-```
 
 ```{r}
 ps_2 <- c(ma.out_1[["distance"]], ma.out_2[["distance"]], ma.out_3[["distance"]], ma.out_4[["distance"]], ma.out_5[["distance"]], ma.out_6[["distance"]], ma.out_7[["distance"]], ma.out_8[["distance"]], ma.out_9[["distance"]], ma.out_10[["distance"]], ma.out_11[["distance"]])
