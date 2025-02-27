@@ -1,0 +1,332 @@
+---
+title: "psm"
+output: html_document
+date: "2024-06-30"
+---
+```{r}
+install.packages("MatchIt")
+install.packages("optmatch")
+install.packages("Matching")
+
+library("MatchIt")
+library("optmatch")
+library("Matching")
+```
+```{r}
+set.seed(1)
+a <- read.csv(file="imputed4 - imputed4.csv")
+
+sites <- unique(a$S)
+nsites <- length(sites)
+
+v1 <- a[a$S == sites[1],]
+v2 <- a[a$S == sites[2],]
+v3 <- a[a$S == sites[3],]
+v4 <- a[a$S == sites[4],]
+v5 <- a[a$S == sites[5],]
+v6 <- a[a$S == sites[6],]
+v7 <- a[a$S == sites[7],]
+v8 <- a[a$S == sites[8],]
+v9 <- a[a$S == sites[9],]
+v10 <- a[a$S == sites[10],]
+v11 <- a[a$S == sites[11],]
+```
+
+```{r}
+ma.out1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "nearest", distance = "logit", replace = TRUE)
+
+ma.out11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "nearest", distance = "logit", replace = TRUE)
+```
+
+```{r}
+ps <- c(ma.out1[["distance"]], ma.out2[["distance"]], ma.out3[["distance"]], ma.out4[["distance"]], ma.out5[["distance"]], ma.out6[["distance"]], ma.out7[["distance"]], ma.out8[["distance"]], ma.out9[["distance"]], ma.out10[["distance"]], ma.out11[["distance"]])
+data_1 <- cbind(ps,a)
+data_1
+write.csv(data_1, file = "nearest.csv", row.names = FALSE)
+```
+```{r}
+Ma.out1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "full", distance = "logit")
+
+Ma.out2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "full", distance = "logit")
+
+Ma.out3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "full", distance = "logit")
+
+Ma.out4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "full", distance = "logit")
+
+Ma.out5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "full", distance = "logit")
+
+Ma.out6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "full", distance = "logit")
+
+Ma.out7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "full", distance = "logit")
+
+Ma.out8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "full", distance = "logit")
+
+Ma.out9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "full", distance = "logit")
+
+Ma.out10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "full", distance = "logit")
+
+Ma.out11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "full", distance = "logit")
+```
+
+```{r}
+ps_1 <- c(Ma.out1[["distance"]], Ma.out2[["distance"]], Ma.out3[["distance"]], Ma.out4[["distance"]], Ma.out5[["distance"]], Ma.out6[["distance"]], Ma.out7[["distance"]], Ma.out8[["distance"]], Ma.out9[["distance"]], Ma.out10[["distance"]], Ma.out11[["distance"]])
+data_2 <- cbind(ps_1,a)
+data_2
+```
+
+
+```{r}
+ma.out_1 <- matchit(v1$REU ~ v1$Gender+v1$Race.Ethnicity+v1$Birth.Year+v1$GPA+v1$Highest.degree.level.re.written+ v1$size.category+v1$public.vs.private+v1$grad.vs.undergrad+v1$updated.ranking*v1$ranking.criteria, data = v1,  method = "optimal", distance = "logit")
+
+ma.out_2 <- matchit(v2$REU ~ v2$Gender+v2$Race.Ethnicity+v2$Birth.Year+v2$GPA+v2$Highest.degree.level.re.written+ v2$size.category+v2$public.vs.private+v2$grad.vs.undergrad+v2$updated.ranking*v2$ranking.criteria, data = v2,  method = "optimal", distance = "logit")
+
+ma.out_3 <- matchit(v3$REU ~ v3$Gender+v3$Race.Ethnicity+v3$Birth.Year+v3$GPA+v3$Highest.degree.level.re.written+ v3$size.category+v3$public.vs.private+v3$grad.vs.undergrad+v3$updated.ranking*v3$ranking.criteria, data = v3,  method = "optimal", distance = "logit")
+
+ma.out_4 <- matchit(v4$REU ~ v4$Gender+v4$Race.Ethnicity+v4$Birth.Year+v4$GPA+v4$Highest.degree.level.re.written+ v4$size.category+v4$public.vs.private+v4$updated.ranking*v4$ranking.criteria, data = v4,  method = "optimal", distance = "logit")
+
+ma.out_5 <- matchit(v5$REU ~ v5$Gender+v5$Race.Ethnicity+v5$Birth.Year+v5$GPA+v5$Highest.degree.level.re.written+ v5$size.category+v5$public.vs.private+v5$grad.vs.undergrad+v5$updated.ranking*v5$ranking.criteria, data = v5,  method = "optimal", distance = "logit")
+
+ma.out_6 <- matchit(v6$REU ~ v6$Gender+v6$Race.Ethnicity+v6$Birth.Year+v6$GPA+v6$Highest.degree.level.re.written+ v6$size.category+v6$public.vs.private+v6$updated.ranking*v6$ranking.criteria, data = v6,  method = "optimal", distance = "logit")
+
+ma.out_7 <- matchit(v7$REU ~ v7$Gender+v7$Race.Ethnicity+v7$Birth.Year+v7$GPA+v7$Highest.degree.level.re.written+ v7$size.category+v7$public.vs.private+v7$grad.vs.undergrad+v7$updated.ranking*v7$ranking.criteria, data = v7,  method = "optimal", distance = "logit")
+
+ma.out_8 <- matchit(v8$REU ~ v8$Gender+v8$Race.Ethnicity+v8$Birth.Year+v8$GPA+v8$Highest.degree.level.re.written+ v8$size.category+v8$public.vs.private+v8$grad.vs.undergrad+v8$updated.ranking*v8$ranking.criteria, data = v8,  method = "optimal", distance = "logit")
+
+ma.out_9 <- matchit(v9$REU ~ v9$Gender+v9$Race.Ethnicity+v9$Birth.Year+v9$GPA+v9$Highest.degree.level.re.written+ v9$size.category+v9$public.vs.private+v9$grad.vs.undergrad+v9$updated.ranking*v9$ranking.criteria, data = v9,  method = "optimal", distance = "logit")
+
+ma.out_10 <- matchit(v10$REU ~ v10$Gender+v10$Race.Ethnicity+v10$Birth.Year+v10$GPA+v10$Highest.degree.level.re.written+ v10$size.category+v10$public.vs.private+v10$updated.ranking*v10$ranking.criteria, data = v10,  method = "optimal", distance = "logit")
+
+ma.out_11 <- matchit(v11$REU ~ v11$Gender+v11$Race.Ethnicity+v11$Birth.Year+v11$GPA+v11$Highest.degree.level.re.written+ v11$size.category+v11$public.vs.private+v11$grad.vs.undergrad+v11$updated.ranking*v11$ranking.criteria, data = v11,  method = "optimal", distance = "logit")
+```
+
+```{r}
+ps_2 <- c(ma.out_1[["distance"]], ma.out_2[["distance"]], ma.out_3[["distance"]], ma.out_4[["distance"]], ma.out_5[["distance"]], ma.out_6[["distance"]], ma.out_7[["distance"]], ma.out_8[["distance"]], ma.out_9[["distance"]], ma.out_10[["distance"]], ma.out_11[["distance"]])
+data_3 <- cbind(ps_2,a)
+data_3
+write.csv(data_3, file = "data_3.csv", row.names = FALSE)
+```
+
+optimal
+```{r}
+em.pair <- read.csv(file="data_3.csv") 
+presf <- friedman.test(em.pair$Presentations, em.pair$REU, em.pair$EM.pair)$p.value
+presf
+pubf <- friedman.test(em.pair$Publications, em.pair$REU, em.pair$EM.pair)$p.value
+pubf
+awardsf <- friedman.test(em.pair$Awards, em.pair$REU, em.pair$EM.pair)$p.value
+awardsf
+```
+
+nearest
+```{r}
+Em.pair <- read.csv(file="nearest.csv") 
+presf <- friedman.test(Em.pair$Presentations, Em.pair$REU, Em.pair$EM.pair)$p.value
+presf
+pubf <- friedman.test(Em.pair$Publications, Em.pair$REU, Em.pair$EM.pair)$p.value
+pubf
+awardsf <- friedman.test(Em.pair$Awards, Em.pair$REU, Em.pair$EM.pair)$p.value
+awardsf
+```
+
+```{r}
+g= read.csv("a.pair.csv")
+presf <- friedman.test(g$Presentations, g$REU, g$a.pair)$p.value
+presf
+pubf <- friedman.test(g$Publications, g$REU, g$a.pair)$p.value
+pubf
+awardsf <- friedman.test(g$Awards, g$REU, g$a.pair)$p.value
+awardsf
+```
+
+optimal
+```{r}
+EM.diff <- em.pair$em.diff
+a.diff <- g$a.diff
+par(mfrow=c(1,2))
+# Colors with transparency (alpha), grid lines, and refined labels
+hist(EM.diff, 
+     breaks=10, 
+  col = rgb(0.3, 0.7, 0.4, 0.8),
+     border="white", 
+     main="New Pairs", 
+     xlab="PS Difference", 
+     ylab="Frequency",
+     cex.main=1, 
+     cex.lab=1, 
+     cex.axis=1)
+grid(nx=NULL, ny=NULL, col="lightgray", lty="dotted")
+
+hist(a.diff, 
+     breaks=10, 
+    col=rgb(0.9, 0.7, 0.1, 0.7),  # Soft yellow with transparency
+     border="white", 
+     main="Initial Pairs", 
+     xlab="PS Difference", 
+     ylab="Frequency", 
+     cex.main=1, 
+     cex.lab=1, 
+     cex.axis=1)
+grid(nx=NULL, ny=NULL, col="lightgray", lty="dotted")
+
+mtext("Figure 1: Optimal Matching", 
+      side=1, outer=TRUE, line=-1, cex=0.9, font=2)  
+
+
+par(mfrow=c(1,2))
+hist(EM.diff, breaks=10 , col=rgb(0.2,0.1,0.7), main="New Pairs", xlab="PS difference")
+hist(a.diff, breaks=10 , col=rgb(0.8, 0.4, 0), main="Initial Pairs", xlab="PS difference")
+
+#par(mfrow=c(1,1))
+#boxplot(EM.diff, a.diff,at = c(1,2), main = "Propensity Score Difference Within Each Match", names = c("new match", "initial match"),col = c( rgb(0.2,0.1,0.7), rgb(0.8, 0.4, 0) ),  notch = FALSE, border = "black",horizontal = TRUE, showmeans=TRUE )
+#legend("topleft", inset=.007, title="Mean",
+ #  c("new=0.6105","initial=0.8138"), fill = c( rgb(0.2,0.1,0.7), rgb(0.8, 0.4, 0)), horiz=TRUE, cex=0.8)
+```
+
+nearest neighbor
+```{r}
+em.diff <- Em.pair$em.diff
+a.diff <- g$a.diff
+# Setting up the layout for side-by-side histograms
+par(mfrow=c(1,2))
+
+# Colors with transparency (alpha), grid lines, and refined labels
+hist(em.diff, 
+     breaks=10, 
+    col=rgb(0.1, 0.6, 0.8, 0.7),
+     border="white", 
+     main="New Pairs", 
+     xlab="PS Difference", 
+     ylab="Frequency",
+     cex.main=1, 
+     cex.lab=1, 
+     cex.axis=1)
+grid(nx=NULL, ny=NULL, col="lightgray", lty="dotted")
+
+hist(a.diff, 
+     breaks=10, 
+    col=rgb(0.9, 0.7, 0.1, 0.7),  # Soft yellow with transparency
+     border="white", 
+     main="Initial Pairs", 
+     xlab="PS Difference", 
+     ylab="Frequency", 
+     cex.main=1, 
+     cex.lab=1, 
+     cex.axis=1)
+grid(nx=NULL, ny=NULL, col="lightgray", lty="dotted")
+
+mtext("Figure 2: Nearest Neighbor Matching ", 
+      side=1, outer=TRUE, line=-1, cex=0.9, font=2)  
+
+# Smaller font for the description
+
+
+par(mfrow=c(1,2))
+hist(em.diff, breaks=10 , col=rgb(0.2,0.1,0.7), main="New Pairs", xlab="PS difference")
+hist(a.diff, breaks=10 , col=rgb(0.8, 0.4, 0), main="Initial Pairs", xlab="PS difference")
+
+
+
+#par(mfrow=c(1,1))
+#boxplot(em.diff, a.diff,at = c(1,2), main = "Propensity Score Difference Within Each Match", names = c("new match", "initial match"),col = c( rgb(0.2,0.1,0.7), rgb(0.8, 0.4, 0) ),  notch = FALSE, border = "black",horizontal = TRUE, showmeans=TRUE )
+#legend("topleft", inset=.007, title="Mean",
+   #c("new=0.6105","initial=0.8138"), fill = c( rgb(0.2,0.1,0.7), rgb(0.8, 0.4, 0)), horiz=TRUE, cex=0.8)
+# Setting up the layout for side-by-side histograms
+```
+bar plots 
+
+```{r}
+install.packages("ggplot2")
+```
+
+```{r}
+library(ggplot2)
+# Gender distribution
+ggplot(em.pair, aes(x = Gender)) +
+  geom_bar(aes(fill = Gender), width = 0.6) +  # Different colors for each gender
+  scale_fill_manual(values = c("male" = "#4B8BBE", "female" = "#E6B73A")) +  # Custom colors
+  labs(title = "Gender Distribution of Participants",
+       x = "Gender",
+       y = "Count") +
+  theme_minimal(base_size = 15) +  # Increase base font size
+  geom_text(stat = "count", aes(label = after_stat(count)), 
+            vjust = -0.2, size = 4, position = position_dodge(width = 0.7)) +  
+  theme(legend.position = "none") 
+```
+```{r}
+ggplot(em.pair, aes(x = Race.Ethnicity)) +
+  geom_bar(aes(fill = Race.Ethnicity), width = 0.7) +  
+  scale_fill_brewer(palette = "Set3") +  
+  labs(title = "Race/Ethnicity Distribution of Participants",
+       x = "Race/Ethnicity",
+       y = "Count") +
+  theme_minimal(base_size = 15) +  
+  geom_text(stat = "count", aes(label = after_stat(count)), 
+            vjust = -0.3, size = 4, position = position_dodge(width = 0.7)) +  
+  theme(legend.position = "none")  
+```
+```{r}
+ggplot(em.pair, aes(x = Birth.Year)) +
+  geom_histogram(binwidth = 1, fill = "#4B8BBE", color = "white", alpha = 0.8) +  # Use a richer purple and add transparency
+  labs(title = "Distribution of Birth Years",
+       x = "Birth Year",
+       y = "Count") +
+  theme_minimal(base_size = 15) +  # Increase base font size
+  geom_text(stat = "count", aes(label = after_stat(count)), 
+            vjust = -0.3, size = 4, position = position_identity()) +  # Add count labels on top of bars
+  scale_x_continuous(breaks = seq(min(em.pair$Birth.Year), max(em.pair$Birth.Year), by = 1)) +  # Custom x-axis breaks
+  theme(panel.grid.major = element_line(color = "gray90"),  # Lighter grid lines for better visibility
+        panel.grid.minor = element_blank(),  # Remove minor grid lines
+        plot.title = element_text(hjust = 0.5))  # Center the title
+```
+
+```{r}
+library(ggplot2)
+# Histogram of GPA
+ggplot(em.pair, aes(x = GPA)) +
+  geom_histogram(binwidth = 0.2, fill = "#4B8BBE", color = "white") +
+  labs(title = "Distribution of GPA", x = "GPA", y = "Count") +
+  theme_minimal()
+```
+
+
+```{r}
+# Stacked bar plot for Gender and Highest Degree Level
+ggplot(em.pair, aes(x = Highest.degree.level.re.written, fill = Gender)) +
+  geom_bar(position = "fill") +
+  labs(title = "Proportional Distribution of Gender by Highest Degree Level",
+       x = "Degree Level",
+       y = "Proportion") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = c("male" = "#4B8BBE", "female" = "#E6B73A")) +  # Custom colors for each gender
+  theme_minimal(base_size = 15) +  # Increase base font size
+  theme(legend.title = element_blank(),  # Remove legend title
+        plot.title = element_text(hjust = 0.5))  # Center the title
+```
+```{r}
+# Facet grid for GPA by Gender and Degree Level
+ggplot(em.pair, aes(x = GPA, fill = grad.vs.undergrad)) +
+  geom_histogram(binwidth = 0.2, color = "white") +
+  labs(title = "GPA Distribution by Graduate vs Undergraduate", x = "GPA", y = "Count") +
+  facet_wrap(~ Gender) +
+  theme_minimal()
+```
+
+

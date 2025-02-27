@@ -1,0 +1,37 @@
+---
+title: "stats research"
+output: html_document
+date: "2024-06-20"
+---
+```{r}
+install.packages("missForest")
+library(missForest)
+```
+```{r}
+set.seed(123)
+data <- read.csv("data.2 - Sheet1.csv")
+data
+```
+```{r}
+data$X <- as.factor(data$X)
+data$PI.site <- as.factor(data$PI.site)
+data$REU.Site.Institution <- as.factor(data$REU.Site.Institution)
+data$Gender <- as.factor(data$Gender)
+data$Race.Ethnicity <- as.factor(data$Race.Ethnicity)
+data$Highest.degree.level.re.written <- as.factor(data$Highest.degree.level.re.written)
+data$size.category <- as.factor(data$size.category)
+data$public.vs.private <- as.factor(data$public.vs.private)
+data$grad.vs.undergrad <- as.factor(data$grad.vs.undergrad)
+```
+
+```{r}
+imputed_data <- missForest(data, verbose = TRUE)
+```
+```{r}
+imputed_data
+```
+write.csv(im.tobeimp[["ximp"]], file = "imputed.csv", row.names = FALSE)
+```{r}
+write.csv(imputed_data[["ximp"]], file = "imputed3.csv", row.names = FALSE)
+```
+
